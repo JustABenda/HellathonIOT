@@ -27,6 +27,7 @@ public:
     static int GetCount(std::string date_from, std::string date_to);
     static int Execute(const char* command);
     static std::string SelectAll();
+    static std::string SelectAllTemps();
 private:
     static int count;
     static std::string *varlist;

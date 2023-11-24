@@ -101,6 +101,7 @@ int DatabaseHandler::callback(void *data, int argc, char **argv, char **azColNam
 std::string DatabaseHandler::SelectAll()
 {
     std::string exec_string = "SELECT * FROM device";
+    std::string result = "";
     int rc = sqlite3_prepare_v2(DatabaseHandler::database, exec_string.c_str(), 1000, &DatabaseHandler::resource, &DatabaseHandler::tail);
     if (rc != SQLITE_OK)
     {
@@ -118,9 +119,30 @@ std::string DatabaseHandler::SelectAll()
             response += "; ";
         }
         Serial.println(response.c_str());
+        result += response + "|";
     }
     sqlite3_finalize(DatabaseHandler::resource);
-    return "";
+    return result;
+}
+std::string DatabaseHandler::SelectAllTemps()
+{
+    std::string exec_string = "SELECT temperature FROM device";
+    std::string result = "";
+    int rc = sqlite3_prepare_v2(DatabaseHandler::database, exec_string.c_str(), 1000, &DatabaseHandler::resource, &DatabaseHandler::tail);
+    if (rc != SQLITE_OK)
+    {
+        Serial.println("Failed executing command");
+        return "";
+    }
+    while (sqlite3_step(DatabaseHandler::resource) == SQLITE_ROW)
+    {
+        std::string response = "";
+        response = ((const char *)sqlite3_column_text(DatabaseHandler::resource, 0));
+        Serial.println(response.c_str());
+        result += response + "|";
+    }
+    sqlite3_finalize(DatabaseHandler::resource);
+    return result;
 }
 int DatabaseHandler::Select(std::string date_from, std::string date_to, int position, std::stringstream *ss_buffer)
 {

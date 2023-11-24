@@ -14,7 +14,16 @@ var mainData = {
 }
 
 function fetchDatabase() {
-    // fetches database and updates mainData
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', "/database", true);
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            //mainData = JSON.parse(xhr.responseText);
+            console.log(xhr.responseText);
+        }
+    };
+    
+    xhr.send();
 }
 
 function reloadData(dataKey, textBefore, textAfter) {
