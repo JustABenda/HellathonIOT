@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head lang="cs">
+    <meta http-equiv="content-language" content="cs">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Iot, meteostanice">
+    <meta name="author" content="Daniel Hut">
+    <meta name="publisher" content="UBPP">
+    <meta name="copyright" content="UBPP">
+    <meta name="description" content="IoT meteostanice - teplota, srážky, průběh počasí a mnohem více...">
+    <meta name="page-topic" content="Weather">
+    <meta name="page-type" content="WatchApp">
+
+    <link rel="stylesheet" href="src/style.css">
+    <script src="src/script.js"></script>
+
+    <title>MeteoApp by UBPP</title>
+</head>
+
+<body lang="cs" onload="reload();">
+    <div id="home-page">
+        <div class="item-x" id="teplota"></div>
+        <div class="item" id="vitr-smer"></div>
+        <div class="item" id="pocitova-teplota"></div>
+        <div class="item" id="vitr-rychlost"></div>
+        <!-- <div class="item" id="srazky"></div> -->
+        <div class="item" id="vlhkost"></div>
+        <div class="item" id="bourka"></div>
+        <div class="item" id="ppm"></div>
+        <div class="item special-tag">Průběh teploty za posledních 24 hodin:</div>
+        <div id="graf-teplota"></div>
+    </div>
+</body>
+
+</html>

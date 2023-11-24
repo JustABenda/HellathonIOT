@@ -6,7 +6,7 @@ bool ConnectorBLE::old_message_sent = true;
 char ConnectorBLE::char_buffer[600];
 int ConnectorBLE::Init()
 {
-    BLEDevice::init("api.ESP32-BLE-Server.hive");
+    BLEDevice::init("api.ESP32-BLE-Meteo.meteo");
     BLEServer *pServer = BLEDevice::createServer();
 
     BLEService *pService = pServer->createService(SERVICE_UUID);
@@ -27,7 +27,7 @@ int ConnectorBLE::Init()
 
     BLEAdvertisementData advData;
     advData.setFlags(ESP_BLE_ADV_FLAG_GEN_DISC | ESP_BLE_ADV_FLAG_BREDR_NOT_SPT);
-    advData.setName("api.ESP32-BLE-Server.hive");
+    advData.setName("api.ESP32-BLE-Meteo.meteo");
     pAdvertising->setAdvertisementData(advData);
 
     pAdvertising->start();
@@ -59,7 +59,7 @@ void ConnectorBLE::MyCallbacks::onWrite(BLECharacteristic *pCharacteristic)
             SendData(MakeCommand(RESPONSE_CALL, ""));
             break;
         case REQUEST_INFO:
-            SendData(MakeCommand(RESPONSE_INFO, "ESP32,HIVE"));
+            SendData(MakeCommand(RESPONSE_INFO, "ESP32,meteo"));
             break;
         case REQUEST_WARE:
             SendData(MakeCommand(RESPONSE_WARE, "1.0"));

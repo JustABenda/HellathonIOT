@@ -1,0 +1,100 @@
+body {
+    font-family: Roboto, sans-serif;
+    background-color: #030017;
+    color: white;
+    margin: 20px;
+}
+
+#home-page {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-x {
+    display: flex;
+    flex-direction: row;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.item-x .text-after {
+    color: #59fcff;
+}
+
+#teplota {
+    justify-content: center;
+    gap: 12px;
+    font-size: 20vw;
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    font-size: 5vw;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.item .text-before {
+    color: #59fcff;
+    width: 50vw;
+}
+
+.special-tag {
+    color: #59fcff;
+}
+
+#graf-teplota {
+    display: grid;
+    align-items: end;
+    justify-items: center;
+    grid-template-columns: repeat(24, 32px);
+    grid-template-rows: [l1] 32px [l2] 36vh [l3];
+    overflow-x: scroll;
+}
+
+.graph-item {
+    width: 32px;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    border-left: solid 1px #030017;
+    border-right: solid 1px #030017;
+}
+
+@media screen and (orientation: portrait) {
+    #teplota {
+        font-size: 20vw;
+    }
+
+    .item {
+        font-size: 5vw;
+    }
+
+    .item .text-before {
+        width: 50vw;
+    }
+
+    #graf-teplota {
+        overflow-x: scroll;
+    }
+}
+
+@media screen and (orientation: landscape) {
+    #teplota {
+        justify-content: start;
+        font-size: 5vw;
+        margin-left: 5vw;
+    }
+
+    .item {
+        font-size: 2vw;
+    }
+
+    .item .text-before {
+        width: 25vw;
+    }
+
+    #graf-teplota {
+        overflow-x: auto;
+    }
+}

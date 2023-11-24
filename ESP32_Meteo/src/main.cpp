@@ -59,13 +59,13 @@ void setup() {
   }
 
   std::string vars[] = {"Humidity_out", "Temperature_out", "WindSpeed_out", "WindDirection_out_text", "RainIndex_out"};
-  std::string units[] = {"%", "°C", "km/h", "[]", "mm/m2"};
+  std::string units[] = {"%", "°C", "km/h", " ", "mm/m2"};
   std::string colors[] = {"red", "blue", "purple", "text", "green"};
 
   DatabaseHandler::Init(vars, units, colors, 5);
 
   ConnectorBLE::Init();
-  ConnectorBLE::SetData("Humidity_out.%.red;Temperature_out.°C.blue;WindSpeed_out.km/h.purple;WindDirection_out_text.[].text;RainIndex_out.mm/m2.green");
+  ConnectorBLE::SetData("Humidity_out.%.red;Temperature_out.°C.blue;WindSpeed_out.km/h.purple;WindDirection_out_text. .text;RainIndex_out.mm/m2.green");
   
   InitSensors();
 
