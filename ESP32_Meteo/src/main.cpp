@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include <PCF8583C.hpp>
 #include <Rtc_Pcf8563.h>
+#include <Database/DatabaseHandler.hpp>
+#include <BLE/ConnectorBLE.hpp>
 
 #define SCL_RTC 19
 #define SDA_RTC 18
@@ -43,13 +45,27 @@ void StartMode(){
 
   }
   else if(operation_mode == OperationMode::UI){
-    
+
   }
 }
 
 void setup() {
   Serial.begin(115200);
   Serial.println("Starting Meteo-station");
+
+  if (!SPIFFS.begin()) // Load SPIFFS Filesystem
+  {
+    Serial.println("Failed to mount device filesystem"); // Failed To mount FS, probably doesn't exist
+  }
+
+  std::string vars[] = {"Humidity_out", "Temperature_out", "WindSpeed_out", "WindDirection_out_text", "RainIndex_out"};
+  std::string units[] = {"%", "°C", "km/h", "[]", "mm/m2"};
+  std::string colors[] = {"red", "blue", "purple", "text", "green"};
+
+  DatabaseHandler::Init(vars, units, colors, 5);
+
+  ConnectorBLE::Init();
+  ConnectorBLE::SetData("Humidity_out.%.red;Temperature_out.°C.blue;WindSpeed_out.km/h.purple;WindDirection_out_text.[].text;RainIndex_out.mm/m2.green");
   
   InitSensors();
 
