@@ -1,18 +1,74 @@
 #include <Arduino.h>
+#include <PCF8583C.hpp>
+#include <Rtc_Pcf8563.h>
 
-// put function declarations here:
-int myFunction(int, int);
+#define SCL_RTC 19
+#define SDA_RTC 18
+
+#define SCL_COUNTERS 22
+#define SDA_COUNTERS 21
+
+#define RTC_ADDR 0x51
+
+#define COUNTER_RAIN_ADDR 0x50
+#define COUNTER_WIND_ADDR 0x51
+
+#define MODE_PIN 34
+
+enum OperationMode{
+  NORMAL,
+  UI
+};
+
+PCF8583C *counter_rain;
+PCF8583C *counter_wind;
+
+Rtc_Pcf8563 rtc;
+
+OperationMode operation_mode;
+
+void InitSensors(){
+  counter_rain = new PCF8583C(SDA_COUNTERS, SCL_COUNTERS, COUNTER_RAIN_ADDR);
+  counter_wind = new PCF8583C(SDA_COUNTERS, SCL_COUNTERS, COUNTER_WIND_ADDR);
+  counter_rain->reset();
+  counter_wind->reset();
+}
+
+void SelectMode(){
+  operation_mode = digitalRead(MODE_PIN) ? OperationMode::NORMAL : OperationMode::UI;
+}
+
+void StartMode(){
+  if(operation_mode == OperationMode::NORMAL){
+
+  }
+  else if(operation_mode == OperationMode::UI){
+    
+  }
+}
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(115200);
+  Serial.println("Starting Meteo-station");
+  
+  InitSensors();
+
+  pinMode(MODE_PIN, INPUT);
+  SelectMode();
+  StartMode();
+/*
+  rtc.initClock();
+  //set a time to start with.
+  //day, weekday, month, century(1=1900, 0=2000), year(0-99)
+  rtc.setDate(14, 6, 3, 1, 10);
+  //hr, min, sec
+  rtc.setTime(1, 15, 0);*/
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  Serial.print(rtc.formatTime());
+  Serial.print("\r\n");
+  Serial.print(rtc.formatDate());
+  Serial.print("\r\n");
+  delay(1000);
 }
