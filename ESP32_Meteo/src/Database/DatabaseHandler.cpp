@@ -126,7 +126,7 @@ std::string DatabaseHandler::SelectAll()
 }
 std::string DatabaseHandler::SelectAllTemps()
 {
-    std::string exec_string = "SELECT temperature FROM device";
+    std::string exec_string = "SELECT datetime, temperature FROM device";
     std::string result = "";
     int rc = sqlite3_prepare_v2(DatabaseHandler::database, exec_string.c_str(), 1000, &DatabaseHandler::resource, &DatabaseHandler::tail);
     if (rc != SQLITE_OK)
@@ -137,7 +137,9 @@ std::string DatabaseHandler::SelectAllTemps()
     while (sqlite3_step(DatabaseHandler::resource) == SQLITE_ROW)
     {
         std::string response = "";
-        response = ((const char *)sqlite3_column_text(DatabaseHandler::resource, 0));
+        response += ((const char *)sqlite3_column_text(DatabaseHandler::resource, 0));
+        response += "@";
+        response += ((const char *)sqlite3_column_text(DatabaseHandler::resource, 1));
         Serial.println(response.c_str());
         result += response + "|";
     }
